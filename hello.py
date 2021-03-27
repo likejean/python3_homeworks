@@ -13,6 +13,17 @@ def index_added_to_itself(my_list):
     return my_list
 
 
+def return_indices_of_all_occurrences(my_list, target):
+    result = list()
+    for i in list(range(len(my_list))):
+        if my_list[i] == target:
+            result.append(i)
+    return result
+
+
+outputData = [str(index_added_to_itself([0, 1, 3, 5])), str(return_indices_of_all_occurrences([2, 6, 7, 8], 2))]
+
+
 class Window(QMainWindow):
 
     def __init__(self, parent=None):
@@ -30,8 +41,12 @@ class Window(QMainWindow):
         self.menu.addAction('&Exit', self.close)
 
     def _populate_result(self):
+        str_text = ''
+        for answer in outputData:
+            idx = outputData.index(answer) + 1
+            str_text += ' <b>Task: ' + str(idx) + '</b><br>' + answer + '<br><br>'
 
-        self.setCentralWidget(QLabel(f'Task {str(index_added_to_itself([0, 1, 3, 5]))}\n'))
+        self.setCentralWidget(QLabel(f'{str_text}\n'))
 
     def _create_status_bar(self):
         status = QStatusBar()
