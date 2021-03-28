@@ -2,7 +2,6 @@ import sys
 
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QMainWindow
-from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QStatusBar
 
@@ -21,7 +20,27 @@ def return_indices_of_all_occurrences(my_list, target):
     return result
 
 
-outputData = [str(index_added_to_itself([0, 1, 3, 5])), str(return_indices_of_all_occurrences([2, 6, 7, 8], 2))]
+def return_length_of_integer(val):
+    i = 0
+    string = val
+    if type(val) != str:
+        string = str(val)
+    for _ in string:
+        i += 1
+    return i
+
+
+def inverts_keys_and_values_of_dictionary(input_dict):
+    """NOTE: input_dict.items() method extracts (key, value) pairs from previous dictionary.
+    Function writes a new key/value pair into the new dictionary for each item via for loop"""
+    return {val: key for key, val in input_dict.items()}
+
+
+outputData = [str(index_added_to_itself([0, 1, 3, 5])),
+              str(return_indices_of_all_occurrences([2, 6, 7, 8], 7)),
+              str(return_length_of_integer({2: 3, 3: 2, 'r': 2})),
+              str(inverts_keys_and_values_of_dictionary({'fruit': 'apple', 'meat': 'beef'}))
+              ]
 
 
 class Window(QMainWindow):
@@ -30,8 +49,8 @@ class Window(QMainWindow):
         """Initializer."""
         super().__init__(parent)
         self.setWindowTitle('Homework')
-        self.setGeometry(100, 100, 450, 650)
-        self.move(150, 250)
+        self.setGeometry(100, 100, 800, 650)
+        self.move(550, 250)
         self._create_menu()
         self._populate_result()
         self._create_status_bar()
@@ -44,13 +63,17 @@ class Window(QMainWindow):
         str_text = ''
         for answer in outputData:
             idx = outputData.index(answer) + 1
-            str_text += ' <b>Task: ' + str(idx) + '</b><br>' + answer + '<br><br>'
+            str_text += ' <b><span style="color: red; font-size: 20px"><b>Task: </b></span> ' \
+                        + '<span style="font-size: 20px"><b>' + str(idx) + '</b></span><br>' \
+                        + '<span style="color: green;">' \
+                        + '<span style="font-size: 15px"><b>' + answer + '</b></span><br>' \
+                        + '</span><br><br> '
 
-        self.setCentralWidget(QLabel(f'{str_text}\n'))
+        self.setCentralWidget(QLabel(f'<div>{str_text}\n</div>'))
 
     def _create_status_bar(self):
         status = QStatusBar()
-        status.showMessage(str(index_added_to_itself([0, 1, 3, 5])))
+        status.showMessage('End')
         self.setStatusBar(status)
 
 
